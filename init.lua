@@ -688,6 +688,21 @@ require('lazy').setup({
       --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      {
+        'zbirenbaum/copilot.lua',
+        cmd = 'Copilot',
+        event = 'InsertEnter',
+        opts = {
+          suggestion = { enabled = false },
+          panel = { enabled = false },
+        },
+      },
+      {
+        'zbirenbaum/copilot-cmp',
+        config = function()
+          require('copilot_cmp').setup {}
+        end,
+      },
     },
     config = function()
       -- See `:help cmp`
@@ -750,6 +765,8 @@ require('lazy').setup({
           --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
         },
         sources = {
+
+          { name = 'copilot', group_index = 2 },
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'path' },

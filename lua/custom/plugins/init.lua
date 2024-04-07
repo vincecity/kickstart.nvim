@@ -2,4 +2,22 @@
 --  I promise not to create any merge conflicts in this directory :)
 --
 -- See the kickstart.nvim README for more information
+-- return {
+--   {
+--     'zbirenbaum/copilot.lua',
+--     cmd = 'Copilot',
+--     event = 'InsertEnter',
+--     opts = {
+--       suggestion = { enabled = false },
+--       panel = { enabled = false },
+--     },
+--   },
+--   {
+--     'zbirenbaum/copilot-cmp',
+--     config = function()
+--       require('copilot_cmp').setup {}
+--     end,
+--   },
+--
+-- }
 return {}
