@@ -388,6 +388,9 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+      vim.keymap.set('n', '<leader>sF', function()
+        builtin.find_files { cwd = '~' }
+      end, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
@@ -569,6 +572,7 @@ require('lazy').setup({
         rust_analyzer = {},
         html = {},
         jsonls = {},
+        cssls = {},
         htmx = {},
 
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -716,6 +720,18 @@ require('lazy').setup({
         end,
       },
     },
+    opts = {
+      window = {
+        completion = {
+          winblend = 0,
+          winhighlight = 'Normal:CmpNormal',
+        },
+        documentation = {
+          winblend = 0,
+          winhighlight = 'Normal:CmpNormal',
+        },
+      },
+    },
     config = function()
       -- See `:help cmp`
       local cmp = require 'cmp'
@@ -778,7 +794,7 @@ require('lazy').setup({
         },
         sources = {
 
-          { name = 'copilot', group_index = 2 },
+          { name = 'copilot' },
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'path' },
@@ -795,9 +811,16 @@ require('lazy').setup({
         telescope = {
           enabled = true,
         },
+        cmp = false,
+        treesitter = true,
+        notify = true,
+        mini = {
+          enabled = true,
+          indentscope_color = '',
+        },
       },
       flavor = 'frappe',
-      transparent_background = true,
+      transparent_background = false,
       color_overrides = {
         frappe = {
           surface2 = '#9999AA',

@@ -4,6 +4,15 @@ return {
     lazy = true,
   },
   {
+    'folke/trouble.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+  },
+  {
     'folke/noice.nvim',
     event = 'VeryLazy',
     opts = {
@@ -97,21 +106,19 @@ return {
     },
     keys = {
       {
-        '<leader>fe',
+        '<leader>E',
         function()
           require('neo-tree.command').execute { toggle = true, dir = '/' }
         end,
         desc = 'Explorer NeoTree (Root Dir)',
       },
       {
-        '<leader>fE',
+        '<leader>e',
         function()
           require('neo-tree.command').execute { toggle = true, dir = vim.uv.cwd() }
         end,
         desc = 'Explorer NeoTree (cwd)',
       },
-      { '<leader>e', '<leader>fe', desc = 'Explorer NeoTree (Root Dir)', remap = true },
-      { '<leader>E', '<leader>fE', desc = 'Explorer NeoTree (cwd)', remap = true },
       {
         '<leader>ge',
         function()
