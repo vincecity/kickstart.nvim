@@ -1,0 +1,81 @@
+-- local lspconfig = require 'lspconfig'
+-- local actions = require 'telescope.actions'
+-- local action_state = require 'telescope.actions.state'
+--
+-- -- Function to set FQBN and restart Arduino language server
+-- local function set_fqbn(fqbn)
+--   local client = vim.lsp.get_clients({ name = 'arduino_language_server' })[1]
+--
+--   if client then
+--     client.stop() -- Stop the current Arduino language server
+--   end
+--
+--   lspconfig.arduino_language_server.setup {
+--     cmd = {
+--       'arduino-language-server',
+--       '-cli-config',
+--       '/Users/vincentfaure/Library/Arduino15/arduino-cli.yaml', -- Adjust as needed
+--       '-fqbn',
+--       fqbn,
+--       '-log',
+--       'true',
+--     },
+--     -- on_attach = function(client, bufnr)
+--     --   -- Optional: Add your on_attach function here
+--     -- end,
+--     capabilities = vim.lsp.protocol.make_client_capabilities(),
+--   }
+--
+--   -- Manually start the new server
+--   lspconfig.arduino_language_server.launch()
+--   print('Arduino language server restarted with FQBN: ' .. fqbn)
+-- end
+--
+-- -- Function to retrieve FQBN list
+-- local function get_fqbn_list()
+--   local handle = io.popen 'arduino-cli board listall --format json'
+--   local result
+--   if handle then
+--     result = handle:read '*a'
+--     handle:close()
+--   end
+--   local boards = vim.fn.json_decode(result)
+--   local fqbn_list = {}
+--
+--   for _, board in ipairs(boards.boards) do
+--     table.insert(fqbn_list, board.fqbn .. ' (' .. board.name .. ')')
+--   end
+--
+--   return fqbn_list
+-- end
+--
+-- -- Function to pick FQBN using Telescope
+-- local function pick_fqbn()
+--   local fqbn_list = get_fqbn_list()
+--
+--   require('telescope.pickers')
+--     .new({}, {
+--       prompt_title = 'Select FQBN',
+--       finder = require('telescope.finders').new_table {
+--         results = fqbn_list,
+--       },
+--       sorter = require('telescope.config').values.generic_sorter {},
+--       attach_mappings = function(_, map)
+--         actions.select_default:replace(function()
+--           actions.close(_)
+--           local selection = action_state.get_selected_entry()[1]
+--           local fqbn = selection:match '^(.-)%s+%(' -- Extract FQBN part
+--           set_fqbn(fqbn)
+--         end)
+--         return true
+--       end,
+--     })
+--     :find()
+-- end
+--
+-- -- Command for opening FQBN selector
+-- vim.api.nvim_create_user_command('ArduinoSelectFQBN', function()
+--   pick_fqbn()
+-- end, {})
+-- -- Keymap for opening FQBN selector
+-- vim.api.nvim_set_keymap('n', '<leader>bf', ':ArduinoSelectFQBN<CR>', { noremap = true, silent = true })
