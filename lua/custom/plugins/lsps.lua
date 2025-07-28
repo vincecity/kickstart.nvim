@@ -116,7 +116,7 @@ return {
           --
           -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
             local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
               buffer = event.buf,
@@ -143,7 +143,7 @@ return {
           -- code, if the language server you are using supports them
           --
           -- This may be unwanted, since they displace some of your code
-          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
             map('<leader>th', function()
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
             end, '[T]oggle Inlay [H]ints')
@@ -201,7 +201,7 @@ return {
         zls = {},
         arduino_language_server = {
           cmd = {
-            '/Users/vincentfaure/Documents/dev/arduino-language-server/arduino-language-server',
+            'arduino-language-server',
             '-cli-config',
             '/Users/vincentfaure/Documents/Arduino/arduino-cli.yaml',
             '-fqbn',
@@ -335,6 +335,7 @@ return {
         cmd = 'Copilot',
         event = 'InsertEnter',
         opts = {
+          copilot_model = 'gpt-4o-copilot', -- Current LSP default is gpt-35-turbo, supports gpt-4o-copilot
           suggestion = { enabled = false },
           panel = { enabled = false },
         },

@@ -43,7 +43,7 @@ What is Kickstart?
 
 Kickstart Guide:
 
-  TODO: The very first thing you should do is to run the command `:Tutor` in Neovim.
+  TODO: The very first thing you should do is to run the command `:Tutor` in Neov.
 
     If you don't know what this means, type the following:
       - <escape key>
@@ -165,10 +165,45 @@ vim.opt.scrolloff = 10
 --  See `:help hlsearch`
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+-- [[ Diagnostic Options ]]
+-- Optional: Change the appearance of the signs in the gutter
+-- These icons depend on your Nerd Font, which you have enabled.
+local signs = {
+  text = {
+    [vim.diagnostic.severity.ERROR] = ' ',
+    [vim.diagnostic.severity.WARN] = ' ',
+    [vim.diagnostic.severity.HINT] = ' ',
+    [vim.diagnostic.severity.INFO] = ' ',
+  },
+}
+vim.diagnostic.config {
+  -- Show signs in the sign column (gutter)
+  signs = {
+    text = signs,
+    -- Use the default sign column, which is the left side of the window
+    --  See `:help vim.diagnostic.signs`
+    priority = 20, -- Set a priority for the signs
+  },
+  -- Show diagnostics as virtual text (inline)
+  virtual_text = {
+    spacing = 4, -- Add some space for readability
+    prefix = '●', -- Or '▎', '■', '→'
+  },
+  -- Underline the code with the diagnostic
+  underline = true,
+  -- Update diagnostics while in insert mode
+  update_in_insert = true,
+  -- Severity sort puts errors first
+  severity_sort = true,
+}
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+vim.keymap.set('n', '[d', function()
+  vim.diagnostic.jump { count = -1 }
+end, { desc = 'Go to previous [D]iagnostic message' })
+vim.keymap.set('n', ']d', function()
+  vim.diagnostic.jump { count = 1 }
+end, { desc = 'Go to next [D]iagnostic message' })
 vim.keymap.set('n', '<leader>de', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -467,10 +502,10 @@ else
         -- Load the colorscheme here.
         -- Like many other themes, this one has different styles, and you could load
         -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-        vim.cmd.colorscheme 'tokyonight-night'
+        -- vim.cmd.colorscheme 'tokyonight-night'
 
         -- You can configure highlights by doing something like:
-        vim.cmd.hi 'Comment gui=none'
+        -- vim.cmd.hi 'Comment gui=none'
       end,
     },
     {
@@ -558,6 +593,7 @@ else
           'go',
           'rust',
           'zig',
+          'php',
           'html',
           'svelte',
           'javascript',
@@ -584,23 +620,8 @@ else
       --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     },
-    {
-      'windwp/nvim-ts-autotag',
-      opts = {
-        -- Defaults
-        enable_close = true, -- Auto close tags
-        enable_rename = true, -- Auto rename pairs of tags
-        enable_close_on_slash = false, -- Auto close on trailing </
-      },
-      -- Also override individual filetype configs, these take priority.
-      -- Empty by default, useful if one of the "opts" global settings
-      -- doesn't work well in a specific filetype
-      -- per_filetype = {
-      --   ["html"] = {
-      --     enable_close = false
-      --   }
-      -- }
-    },
+
+    'windwp/nvim-ts-autotag',
 
     -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
     -- init.lua. If you want these files, they are in the repository, so you can just download them and
