@@ -16,7 +16,7 @@ return {
     'CopilotC-Nvim/CopilotChat.nvim',
     branch = 'main',
     dependencies = {
-      { 'zbirenbaum/copilot.lua' }, -- or github/copilot.vim
+      -- { 'zbirenbaum/copilot.lua' }, -- Already configured in lsps.lua
       { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
     },
     opts = {
