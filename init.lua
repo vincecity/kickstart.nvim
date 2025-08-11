@@ -165,6 +165,7 @@ vim.opt.scrolloff = 10
 --  See `:help hlsearch`
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '<leader>so', ':update<CR> :source<CR>')
 -- [[ Diagnostic Options ]]
 -- Optional: Change the appearance of the signs in the gutter
 -- These icons depend on your Nerd Font, which you have enabled.
