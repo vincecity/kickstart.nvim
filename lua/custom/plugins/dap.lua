@@ -21,11 +21,24 @@ return {
       {
         'rcarriga/nvim-dap-ui',
         dependencies = { 'nvim-neotest/nvim-nio' },
-      -- stylua: ignore
-      keys = {
-        { "<leader>du", function() require("dapui").toggle({ }) end, desc = "Dap UI" },
-        { "<leader>dev", function() require("dapui").eval() end, desc = "Eval", mode = {"n", "v"} },
-      },
+        -- stylua: ignore 2
+        keys = {
+          {
+            '<leader>du',
+            function()
+              require('dapui').toggle {}
+            end,
+            desc = 'Dap UI',
+          },
+          {
+            '<leader>dev',
+            function()
+              require('dapui').eval()
+            end,
+            desc = 'Eval',
+            mode = { 'n', 'v' },
+          },
+        },
         opts = {},
         config = function(_, opts)
           -- setup dap config by VsCode launch.json file

@@ -209,6 +209,7 @@ return {
           },
         },
         zls = {},
+        ols = {},
         arduino_language_server = {
           cmd = {
             'arduino-language-server',
@@ -345,7 +346,6 @@ return {
         cmd = 'Copilot',
         event = 'InsertEnter',
         opts = {
-          copilot_model = 'gpt-4o-copilot', -- Current LSP default is gpt-35-turbo, supports gpt-4o-copilot
           suggestion = { enabled = false },
           panel = { enabled = false },
         },

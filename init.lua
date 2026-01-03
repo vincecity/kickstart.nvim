@@ -196,6 +196,7 @@ vim.diagnostic.config {
   update_in_insert = true,
   -- Severity sort puts errors first
   severity_sort = true,
+  float = true,
 }
 
 -- Diagnostic keymaps
@@ -510,6 +511,14 @@ else
       end,
     },
     {
+      'rose-pine/neovim',
+      name = 'rose-pine',
+      config = function()
+        vim.cmd.colorscheme 'rose-pine-moon'
+      end,
+      priority = 1001,
+    },
+    {
       'catppuccin/nvim',
       name = 'catppuccin',
       opts = {
@@ -528,9 +537,9 @@ else
           end,
         },
       },
-      init = function()
-        vim.cmd.colorscheme 'catppuccin-frappe'
-      end,
+      -- init = function()
+      --   vim.cmd.colorscheme 'catppuccin-frappe'
+      -- end,
       priority = 1000,
     },
     -- Highlight todo, notes, etc in comments
@@ -592,6 +601,7 @@ else
           'cpp',
           'arduino',
           'go',
+          'glsl',
           'rust',
           'zig',
           'php',

@@ -4,7 +4,7 @@
 return {
   'windwp/nvim-autopairs',
   opts = {
-    disable_file = { 'TelescopePrompt.lua', 'vim', 'c', 'cpp' },
+    disable_file = { 'TelescopePrompt.lua', 'zig', 'odin', 'vim', 'c', 'cpp' },
   },
   event = 'InsertEnter',
   -- Optional dependency
