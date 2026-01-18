@@ -120,7 +120,46 @@ return {
   },
 
     config = function()
-      local dap = {
+      local dap = require 'dap'
+      local mason_ok, mason_registry = pcall(require, 'mason-registry')
+
+      if mason_ok then
+        local codelldb_pkg = mason_registry.get_package 'codelldb'
+        if codelldb_pkg:is_installed() then
+          local extension_path = codelldb_pkg:get_install_path() .. '/extension/'
+          local codelldb_path = extension_path .. 'adapter/codelldb'
+
+          dap.adapters.codelldb = {
+            type = 'server',
+            port = '${port}',
+            executable = {
+              command = codelldb_path,
+              args = { '--port', '${port}' },
+              detached = false,
+            },
+          }
+
+          dap.configurations.odin = {
+            {
+              name = 'Launch Odin',
+              type = 'codelldb',
+              request = 'launch',
+              program = function()
+                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/bin/', 'file')
+              end,
+              cwd = '${workspaceFolder}',
+              stopOnEntry = false,
+              args = {},
+            },
+          }
+        else
+          vim.notify('codelldb is not installed. Install it with :Mason.', vim.log.levels.WARN)
+        end
+      else
+        vim.notify('mason-registry not available for codelldb setup.', vim.log.levels.WARN)
+      end
+
+      local dap_signs = {
         Stopped = { '󰁕 ', 'DiagnosticWarn', 'DapStoppedLine' },
         Breakpoint = ' ',
         BreakpointCondition = ' ',
@@ -129,7 +168,7 @@ return {
       }
       vim.api.nvim_set_hl(0, 'DapStoppedLine', { default = true, link = 'Visual' })
 
-      for name, sign in pairs(dap) do
+      for name, sign in pairs(dap_signs) do
         sign = type(sign) == 'table' and sign or { sign }
         vim.fn.sign_define('Dap' .. name, { text = sign[1], texthl = sign[2] or 'DiagnosticInfo', linehl = sign[3], numhl = sign[3] })
       end
