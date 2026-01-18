@@ -10,6 +10,11 @@ local function getpath()
   return vim.fn.input('Path to executable: ', default, 'file')
 end
 
+local function get_odin_path()
+  local bin_dir = vim.fn.getcwd() .. '/bin'
+  return vim.fn.input('Path to executable: ', bin_dir .. '/', 'file')
+end
+
 dap.adapters.delve = {
   type = 'server',
   port = '${port}',
@@ -82,6 +87,19 @@ dap.configurations.zig = {
     name = 'Launch Zig executable',
     request = 'launch',
     program = getpath(),
+    cwd = function()
+      return vim.fn.getcwd()
+    end,
+    stopOnEntry = false,
+  },
+}
+
+dap.configurations.odin = {
+  {
+    type = 'codelldb',
+    name = 'Launch Odin executable',
+    request = 'launch',
+    program = get_odin_path(),
     cwd = function()
       return vim.fn.getcwd()
     end,
