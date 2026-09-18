@@ -1,2 +1,4 @@
 .DS_Store
+.migration/
+# Keep nvim-pack-lock.json tracked for reproducible plugin revisions.
 
